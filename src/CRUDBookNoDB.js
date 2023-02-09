@@ -16,14 +16,17 @@ let books = [
     author : 'Author 3'
  }
 ];
+app.get('/books', (req,res) =>{
+    res.json(books);
+});
 app.get('/books/:id', (req,res) => {
-    const book = book.find(b => b.id === parseInt(req.params.id));
+    const book = books.find(b => b.id === parseInt(req.params.id));
     if(!book) res.status(404).send('Book not found');
     res.json(book);
 });
 app.post('/books',(req,res) => {
     const book = {
-        id : books.length+1,
+        id : books.length + 1,
         title : req.body.title,
         author : req.body.author
     };
@@ -39,10 +42,10 @@ app.put('/book/:id', (req,res) => {
 });
 
 app.delete('/book/:id', (req,res) => {
-    const book = books.find(b => b.id === parseInt(req,params.id));
-    if(!book) res.status(404).setDefaultEncoding('Book not found');
+    const book = books.find(b => b.id === parseInt(req.params.id));
+    if (!book) res.status(404).send('Book not found');
     const index = books.indexOf(book);
-    books.splice(index,1);
+    books.splice(index , 1);
     res.send(book);
 });
 const port = process.env.PORT || 3000;
