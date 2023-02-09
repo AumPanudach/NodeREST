@@ -33,7 +33,7 @@ app.post('/books',(req,res) => {
     books.push(book);
     res.send(book);
 });
-app.put('/book/:id', (req,res) => {
+app.put('/books/:id', (req,res) => {
     const book = books.find(b => b.id === parseInt(req.params.id));
     if(!book) res.status(404).send('Book not found');
     book.title = req.body.title;
@@ -41,7 +41,7 @@ app.put('/book/:id', (req,res) => {
     res.send(book);
 });
 
-app.delete('/book/:id', (req,res) => {
+app.delete('/books/:id', (req,res) => {
     const book = books.find(b => b.id === parseInt(req.params.id));
     if (!book) res.status(404).send('Book not found');
     const index = books.indexOf(book);
