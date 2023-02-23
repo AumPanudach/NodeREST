@@ -4,6 +4,7 @@ const app = express();
 const db = new sqlite3.Database('./Database./Book.sqlite');
 app.use(express.json());
 db.run(`CREATE TABLE IF NOT EXISTS books ( id INTEGER PRIMARY KEY,title TEXT ,author TEXT)`);
+
 app.get('/books',(req,res) => {
     db.all('SELECT * FROM books',(err,rows) => {
         if(err){
