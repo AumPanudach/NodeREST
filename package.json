@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "format": "prettier --write src/*.js",
-    "dev": "nodemon src/CRUDBookNoDB.js"
+    "dev": "nodemon src/CRUDBookSQLite.js"
   },
   "repository": {
     "type": "git",
