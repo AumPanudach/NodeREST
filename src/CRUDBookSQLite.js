@@ -52,27 +52,59 @@ app.post('/books', (req, res) => {
 });
 
 app.put('/books/:id', (req, res) => {
-    const book = req.body;
-    db.run('UPDATE books SET title = ? , author = ? WHERE id = ?', book.title, book.author, req.params.id, function (err) {
-        if (err) {
-            res.status(500).send(err);
+    db.all('SELECT id FROM books',(err,rows) => {
+        console.log(rows);
+        let checkid = rows.map((row) => {
+            if(row.id === parseInt(req.params.id)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        })
+        if(checkid.includes(true)){
+            const book = req.body;
+            db.run('UPDATE books SET title = ? , author = ? WHERE id = ?', book.title, book.author, req.params.id, function (err) {
+                if (err) {
+                    res.status(500).send(err);
+                    }
+                else {
+                res.send(book);
+            }
+            });
         }
         else {
-            res.send(book);
+            res.status(502).json('not found');
         }
     });
+    
 });
 
 
 app.delete('/books/:id', (req, res) => {
-    db.run('DELETE FROM books WHERE id = ?', req.params.id, function (err) {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.send({});
+    db.all('SELECT id FROM books',(err,rows) => {
+        console.log(rows);
+        let checkid = rows.map((row) => {
+            if(row.id === parseInt(req.params.id)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        });
+        if(checkid.includes(true)){
+             db.run('DELETE FROM books WHERE id = ?', req.params.id, function (err) {
+                if (err) {
+                    res.status(500).send(err);
+                } else {
+                    res.send({});
+                }
+                });
+        }
+        else{
+            res.status(502).json('not found');
         }
     });
 });
-
 const port = process.env.PORT  || 3000;
 app.listen(port , () => console.log(`Listening on port ${port}...`));
