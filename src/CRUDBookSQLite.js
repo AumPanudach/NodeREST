@@ -53,7 +53,6 @@ app.post('/books', (req, res) => {
 
 app.put('/books/:id', (req, res) => {
     db.all('SELECT id FROM books',(err,rows) => {
-        console.log(rows);
         let checkid = rows.map((row) => {
             if(row.id === parseInt(req.params.id)){
                 return true;
@@ -83,7 +82,6 @@ app.put('/books/:id', (req, res) => {
 
 app.delete('/books/:id', (req, res) => {
     db.all('SELECT id FROM books',(err,rows) => {
-        console.log(rows);
         let checkid = rows.map((row) => {
             if(row.id === parseInt(req.params.id)){
                 return true;
